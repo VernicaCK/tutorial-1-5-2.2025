@@ -1,0 +1,24 @@
+#include <iostream>
+
+class Vehicle {
+public:
+    int speed;
+    float fuelLevel;
+
+    Vehicle(int s, float f) : speed(s), fuelLevel(f) {}
+
+    void displayStatus() const {
+        std::cout << "Speed: " << speed << " km/h, Fuel Level: " << fuelLevel << " liters\n";
+    }
+};
+
+int main() {
+    
+    int Vehicle::*ptrSpeed = &Vehicle::speed;
+    void (Vehicle::*ptrDisplay)() const = &Vehicle::displayStatus;
+    Vehicle car(50, 20.5);
+    car.*ptrSpeed = 80;
+    (car.*ptrDisplay)();
+
+    return 0;
+}
