@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+class Book {
+public:
+    string title, author, isbn;
+    bool available = true;
+    Book() {}
+    Book(string t, string a, string i) : title(t), author(a), isbn(i) {}
+};
+
+class Library {
+    Book books[10];
+    int count = 0;
+public:
+    void addBook(Book b) { if (count < 10) books[count++] = b; }
+    void searchBook(string title) {
+        for (int i = 0; i < count; i++)
+            if (books[i].title == title) cout << "Found: " << books[i].title << " by " << books[i].author << "\n";
+    }
+    void borrowBook(string isbn) {
+        for (int i = 0; i < count; i++)
+            if (books[i].isbn == isbn && books[i].available) { books[i].available = false; cout << "Borrowed: " << books[i].title << "\n"; return; }
+        cout << "Not available!\n";
+    }
+    void returnBook(string isbn) {
+        for (int i = 0; i < count; i++)
+            if (books[i].isbn == isbn && !books[i].available) { books[i].available = true; cout << "Returned: " << books[i].title << "\n"; return; }
+    }
+};
+
+int main() {
+    Library lib;
+    lib.addBook({"1984", "George Orwell", "123"});
+    lib.searchBook("1984");
+    lib.borrowBook("123");
+    lib.returnBook("123");
+}
