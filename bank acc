@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+class BankAccount {
+    int accountNumber;
+    double balance;
+    string accountHolderName;
+
+public:
+    BankAccount(int acc, string name, double bal) : accountNumber(acc), accountHolderName(name), balance(bal) {}
+
+    void deposit(double amount) { balance += amount; cout << "Deposited: " << amount << "\n"; }
+    void withdraw(double amount) { 
+        if (amount <= balance) balance -= amount, cout << "Withdrawn: " << amount << "\n"; 
+        else cout << "Insufficient balance!\n"; 
+    }
+    void displayBalance() { cout << "Balance: " << balance << "\n"; }
+};
+
+int main() {
+    int accNumber;
+    string holderName;
+    double initialBalance;
+
+    cout << "Enter Account Number, Name, Initial Balance: ";
+    cin >> accNumber >> holderName >> initialBalance;
+    BankAccount myAccount(accNumber, holderName, initialBalance);
+
+    int choice; double amount;
+    do {
+        cout << "\n1.Deposit 2.Withdraw 3.Balance 4.Exit\nChoose: ";
+        cin >> choice;
+        if (choice == 1) cin >> amount, myAccount.deposit(amount);
+        else if (choice == 2) cin >> amount, myAccount.withdraw(amount);
+        else if (choice == 3) myAccount.displayBalance();
+    } while (choice != 4);
+    
+    return 0;
+}
